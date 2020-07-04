@@ -14,12 +14,8 @@ const andExpr = d => {
 }
 
 const unwrapIfAnd = (expr) => {
-  console.log(expr)
   if (expr.$and) {
-    return [
-      ...unwrapIfAnd(expr.$and[0]),
-      ...unwrapIfAnd(expr.$and[1]),
-    ]
+    return expr.$and.map(unwrapIfAnd).flat()
   }
   return [ expr ]
 }

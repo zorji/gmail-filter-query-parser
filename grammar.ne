@@ -17,12 +17,8 @@ const andExpr = d => {
 }
 
 const unwrapIfAnd = (expr) => {
-  console.log(expr)
   if (expr.$and) {
-    return [
-      ...unwrapIfAnd(expr.$and[0]),
-      ...unwrapIfAnd(expr.$and[1]),
-    ]
+    return expr.$and.map(unwrapIfAnd).flat()
   }
   return [ expr ]
 }
@@ -30,9 +26,11 @@ const unwrapIfAnd = (expr) => {
 
 # Inspired by https://github.com/justinkenel/js-sql-parse/blob/master/sql.ne
 
-expression ->
-  expr {% d => ({$and: [d[0]]}) %}
-  | "(" _ expr _ ")" {% d => ({$and: [d[2]]}) %}
+expression -> where
+
+where ->
+  expr {% id %}
+  | "(" _ expr _ ")" {% d => d[2] %}
 
 OR -> "or"i
 AND -> "and"i
