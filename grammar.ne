@@ -11,15 +11,16 @@ AND -> "AND"#i
 OPERATOR -> OR | AND
 
 OrExpr ->
-  AndExpr __ OR __ OrExpr {% d => `(${d[0]} OR ${d[4]})` %}
+  AndExpr __ OR __ OrExpr {% d => ({ $or: [d[0], d[4]] }) %}
   | AndExpr
 
 AndExpr ->
-  Clause __ AND __ AndExpr {% d => `(${d[0]} AND ${d[4]})` %}
+  Clause __ AND __ AndExpr {% d => ({ $and: [d[0], d[4]] }) %}
   | ParenthesesExpr
 
 ParenthesesExpr ->
-  "(" _ AndExpr __ OPERATOR __ OrExpr _ ")" {% d => `(${d[2]} ${d[4]} ${d[6]})` %}
+  "(" _ AndExpr __ OR __ OrExpr _ ")" {% d => ({ $or: [d[2], d[6]] }) %}
+  | "(" _ AndExpr __ AND __ OrExpr _ ")" {% d => ({ $and: [d[2], d[6]] }) %}
   | Clause
 
 Clause ->
