@@ -1,0 +1,26 @@
+{
+  "name": "gmail-filter-parser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile-parser": "nearleyc ./grammar.ne --out ./grammar.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zorji/gmail-filter-parser.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zorji/gmail-filter-parser/issues"
+  },
+  "homepage": "https://github.com/zorji/gmail-filter-parser#readme",
+  "dependencies": {
+    "nearley": "^2.19.4"
+  },
+  "devDependencies": {
+    "@types/nearley": "^2.11.1"
+  }
+}
