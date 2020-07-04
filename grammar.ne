@@ -8,20 +8,18 @@ expression -> OrExpr {% id %}
 OR -> "OR"#i
 AND -> "AND"#i
 
-OPERATOR -> OR | AND
-
 OrExpr ->
   AndExpr __ OR __ OrExpr {% d => ({ $or: [d[0], d[4]] }) %}
-  | AndExpr
+  | AndExpr {% id %}
 
 AndExpr ->
   Clause __ AND __ AndExpr {% d => ({ $and: [d[0], d[4]] }) %}
-  | ParenthesesExpr
+  | ParenthesesExpr {% id %}
 
 ParenthesesExpr ->
   "(" _ AndExpr __ OR __ OrExpr _ ")" {% d => ({ $or: [d[2], d[6]] }) %}
   | "(" _ AndExpr __ AND __ OrExpr _ ")" {% d => ({ $and: [d[2], d[6]] }) %}
-  | Clause
+  | Clause {% id %}
 
 Clause ->
   "has:attachment" {% id %}
