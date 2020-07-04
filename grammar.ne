@@ -8,15 +8,18 @@ expression -> OrExpr {% id %}
 OR -> "+"#i
 AND -> "*"#i
 
-ParenthesesExpr ->
-  "(" _ OrExpr _ ")"
+OPERATOR -> OR | AND
 
 OrExpr ->
-  AndExpr _ OR _ OrExpr {% d => `(${d[0]}+${d[4]})` %}
+  AndExpr _ OR _ OrExpr {% d => `(${d[0]} + ${d[4]})` %}
   | AndExpr
 
 AndExpr ->
-  Clause _ AND _ AndExpr {% d => `(${d[0]}*${d[4]})` %}
+  Clause _ AND _ AndExpr {% d => `(${d[0]} * ${d[4]})` %}
+  | ParenthesesExpr
+
+ParenthesesExpr ->
+  "(" _ AndExpr _ OPERATOR _ OrExpr _ ")" {% d => `(${d[2]} ${d[4]} ${d[6]})` %}
   | Clause
 
 Clause -> "a" | "b" | "c" {% id %}
