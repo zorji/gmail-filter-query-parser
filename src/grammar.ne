@@ -22,8 +22,8 @@ ParenthesesExpr ->
   | Clause {% id %}
 
 Clause ->
-  "has:attachment" {% id %}
-  | "from:(" _ Str _ ")" {% d => d.join('') %}
-  | "subject:(" _ Str _ ")" {% d => d.join('') %}
+  "has:attachment" {% d => ({ value: d[0] }) %}
+  | "from:(" _ Str _ ")" {% d => ({ value: d.join('') }) %}
+  | "subject:(" _ Str _ ")" {% d => ({ value: d.join('') }) %}
 
 Str -> [_a-zA-Z0-9-:\(\)@.]:* {% d => d[0].join('') %}
