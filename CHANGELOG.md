@@ -10,5 +10,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Create parse/serialise
 
-[Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.1...HEAD
-[0.0.1]: https://github.com/olivierlacan/keep-a-changelog/releases/tag/v0.0.1
+[Unreleased]: https://github.com/zorji/gmail-filter-query-parser/compare/v0.0.1...HEAD
+[0.0.1]: https://github.com/zorji/gmail-filter-query-parser/releases/tag/v0.0.1
