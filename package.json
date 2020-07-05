@@ -3,11 +3,13 @@
   "version": "0.0.1",
   "description": "A nearley based parser to parse/serialise Gmail filter query.",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
     "clean": "rimraf dist",
     "compile": "npm run clean && npm run compile-parser && tsc --build tsconfig.build.json && cp src/grammar.js dist",
-    "compile-parser": "nearleyc src/grammar.ne --out src/grammar.js"
+    "compile-parser": "nearleyc src/grammar.ne --out src/grammar.js",
+    "prepublish": "npm run compile"
   },
   "repository": {
     "type": "git",

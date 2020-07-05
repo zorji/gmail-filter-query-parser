@@ -2,7 +2,6 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "moduleResolution": "Node",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": false
