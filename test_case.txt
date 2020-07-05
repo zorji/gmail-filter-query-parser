@@ -1,1 +1,0 @@
-((from:(account@strata1.com) AND has:attachment) OR (from:(account@strata2.com) AND has:attachment) OR ((from:(noreply@strata3.com) OR from:(account@strata3.com)) AND subject:(Levy) AND has:attachment) OR (from:(noreply@internet.co) AND subject:(Invoice)) OR (from:(donotreply@reates.govt) AND has:attachment))

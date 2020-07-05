@@ -1,10 +1,12 @@
 {
   "name": "gmail-filter-query-parser",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "A nearley based parser to parse/serialise Gmail filter query.",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest",
+    "clean": "rimraf dist",
+    "compile": "npm run clean && npm run compile-parser && tsc --build tsconfig.build.json && cp src/grammar.js dist",
     "compile-parser": "nearleyc src/grammar.ne --out src/grammar.js"
   },
   "repository": {
@@ -12,7 +14,7 @@
     "url": "git+https://github.com/zorji/gmail-filter-parser.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/zorji/gmail-filter-parser/issues"
   },
@@ -24,6 +26,7 @@
     "@types/jest": "^26.0.3",
     "@types/nearley": "^2.11.1",
     "jest": "^26.1.0",
+    "rimraf": "^3.0.2",
     "ts-jest": "^26.1.1",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.6"
