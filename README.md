@@ -17,7 +17,7 @@ const parsed = parse('subject:(invoice) AND has:attachment')
 console.log(parsed)
 // { $and: [ { value: 'subject:(invoice)' }, { value: 'has:attachment' } ] }
 
-const serialised = serialise(And(
+const serialised = serialise(AND(
   Subject('invoice'),
   HasAttachment(),
 ))

@@ -1,25 +1,25 @@
-import { And, From, HasAttachment, Or, parse, QueryNode, serialise, Subject } from './parser'
+import { AND, From, HasAttachment, OR, parse, QueryNode, serialise, Subject } from './parser'
 
 describe('parser', () => {
 
   it('should generate query correctly', () => {
 
-    const node = Or(
-      And(From('account@strata1.com'), HasAttachment()),
-      And(From('account@strata2.com'), HasAttachment()),
-      And(
-        Or(
+    const node = OR(
+      AND(From('account@strata1.com'), HasAttachment()),
+      AND(From('account@strata2.com'), HasAttachment()),
+      AND(
+        OR(
           From('noreply@strata3.com'),
           From('account@strata3.com'),
         ),
         Subject('Levy'),
         HasAttachment(),
       ),
-      And(
+      AND(
         From('noreply@internet.co'),
         Subject('Invoice'),
       ),
-      And(From('donotreply@reates.govt'), HasAttachment()),
+      AND(From('donotreply@reates.govt'), HasAttachment()),
     )
 
     expect(serialise(node))
@@ -38,22 +38,22 @@ describe('parser', () => {
       } as QueryNode)
 
     expect(parse('((from:(account@strata1.com) AND has:attachment) OR (from:(account@strata2.com) AND has:attachment) OR ((from:(noreply@strata3.com) OR from:(account@strata3.com)) AND subject:(Levy) AND has:attachment) OR (from:(noreply@internet.co) AND subject:(Invoice)) OR (from:(donotreply@reates.govt) AND has:attachment))'))
-      .toEqual(Or(
-        And(From('account@strata1.com'), HasAttachment()),
-        And(From('account@strata2.com'), HasAttachment()),
-        And(
-          Or(
+      .toEqual(OR(
+        AND(From('account@strata1.com'), HasAttachment()),
+        AND(From('account@strata2.com'), HasAttachment()),
+        AND(
+          OR(
             From('noreply@strata3.com'),
             From('account@strata3.com'),
           ),
           Subject('Levy'),
           HasAttachment(),
         ),
-        And(
+        AND(
           From('noreply@internet.co'),
           Subject('Invoice'),
         ),
-        And(From('donotreply@reates.govt'), HasAttachment()),
+        AND(From('donotreply@reates.govt'), HasAttachment()),
       ))
 
   })

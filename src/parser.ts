@@ -14,35 +14,60 @@ export interface QueryOrNode {
   $or: QueryNode[]
 }
 
-export const HasAttachment = (): QueryLeafNode => {
+export interface QueryNotNode {
+  $not: QueryNode
+}
+
+export function HasAttachment(): QueryLeafNode {
   return { value: 'has:attachment' }
 }
 
-export const From = (str: string): QueryLeafNode => {
+export function From(str: string): QueryLeafNode {
   return { value: `from:(${str})` }
 }
 
-export const Subject = (str: string): QueryLeafNode => {
+export function Subject(str: string): QueryLeafNode {
   return { value: `subject:(${str})` }
 }
 
-export const And = (...nodes: QueryNode[]): QueryAndNode => {
+export function Label(str: string): QueryLeafNode {
+  return { value: `label:(${str})` }
+}
+
+export function AND(...nodes: QueryNode[]): QueryAndNode {
   return {
     $and: nodes,
   }
 }
 
-export const Or = (...nodes: QueryNode[]): QueryOrNode => {
+
+export function NOT(query: QueryNode): QueryNotNode {
+  return ({ $not: query })
+}
+
+export function OR(...nodes: QueryNode[]): QueryOrNode {
   return {
     $or: nodes,
   }
 }
 
-export type QueryNode = QueryLeafNode | QueryAndNode | QueryOrNode
+export type QueryNode = QueryLeafNode | QueryAndNode | QueryOrNode | QueryNotNode
 
-export const isAndNode = (node: QueryNode): node is QueryAndNode => '$and' in node
-export const isOrNode = (node: QueryNode): node is QueryOrNode => '$or' in node
-export const isLeafNode = (node: QueryNode): node is QueryLeafNode => !isAndNode(node) && !isOrNode(node)
+export function isAndNode(node: QueryNode): node is QueryAndNode {
+  return '$and' in node
+}
+
+export function isOrNode(node: QueryNode): node is QueryOrNode {
+  return '$or' in node
+}
+
+export function isNotNode(node: QueryNode): node is QueryNotNode {
+  return '$not' in node
+}
+
+export function isLeafNode(node: QueryNode): node is QueryLeafNode {
+  return !isAndNode(node) && !isOrNode(node)
+}
 
 export const parse = (query: string): QueryNode => {
   const parser = new Parser(
@@ -62,10 +87,12 @@ export const serialise = (node: QueryNode): string => {
       return serialise(node.$or[0])
     }
     return '(' + node.$or.map(serialise).join(' OR ') + ')'
-  } else {
+  } else if (isAndNode(node)) {
     if (node.$and.length < 2) {
       return serialise(node.$and[0])
     }
     return '(' + node.$and.map(serialise).join(' AND ') + ')'
+  } else {
+    return 'NOT ' + serialise(node.$not)
   }
 }
