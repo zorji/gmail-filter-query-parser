@@ -1,6 +1,6 @@
 {
   "name": "gmail-filter-query-parser",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A nearley based parser to parse/serialise Gmail filter query.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
