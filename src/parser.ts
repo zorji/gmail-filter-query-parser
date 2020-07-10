@@ -40,9 +40,9 @@ export const Or = (...nodes: QueryNode[]): QueryOrNode => {
 
 export type QueryNode = QueryLeafNode | QueryAndNode | QueryOrNode
 
-const isAndNode = (node: QueryNode): node is QueryAndNode => '$and' in node
-const isOrNode = (node: QueryNode): node is QueryOrNode => '$or' in node
-const isLeafNode = (node: QueryNode): node is QueryLeafNode => !isAndNode(node) && !isOrNode(node)
+export const isAndNode = (node: QueryNode): node is QueryAndNode => '$and' in node
+export const isOrNode = (node: QueryNode): node is QueryOrNode => '$or' in node
+export const isLeafNode = (node: QueryNode): node is QueryLeafNode => !isAndNode(node) && !isOrNode(node)
 
 export const parse = (query: string): QueryNode => {
   const parser = new Parser(
