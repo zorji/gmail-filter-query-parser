@@ -69,7 +69,7 @@ export function isLeafNode(node: QueryNode): node is QueryLeafNode {
   return !isAndNode(node) && !isOrNode(node)
 }
 
-export const parse = (query: string): QueryNode => {
+export function parse(query: string): QueryNode {
   const parser = new Parser(
     Grammar.fromCompiled(grammar),
     { keepHistory: true },
@@ -79,7 +79,7 @@ export const parse = (query: string): QueryNode => {
   return results[0] as QueryNode
 }
 
-export const serialise = (node: QueryNode): string => {
+export function serialise(node: QueryNode): string {
   if (isLeafNode(node)) {
     return node.value
   } else if (isOrNode(node)) {
